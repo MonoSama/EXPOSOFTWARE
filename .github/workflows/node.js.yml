@@ -1,0 +1,41 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: '*/10 * * * *'  # ⏰ Cada 10 minutos
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright
+        run: npx playwright install
+      - name: Install Cucumber
+        run: npm i @cucumber/cucumber -D
+      - name: Install ts-node
+        run: npm i ts-node -D
+      - name: Run Cucumber tests
+        run: npm test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Report
+          path: test-result
+          retention-days: 2
