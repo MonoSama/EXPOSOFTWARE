@@ -8,7 +8,7 @@ let page:Page;
 
 Before(async function(){
     browser = await chromium.launch({
-        headless: false, // FALSE: ABRE EL NAVEGADOR Y MUESTRA LA AUTOMATIZACIÓN, TRUE: NO ABRE EL NAVEGADOR
+        headless: true, // FALSE: ABRE EL NAVEGADOR Y MUESTRA LA AUTOMATIZACIÓN, TRUE: NO ABRE EL NAVEGADOR
         //channel: 'msedge' // Especifica que usaremos Microsoft Edge o el que deseemos
     });
     context = await browser.newContext()
