@@ -5,8 +5,6 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-  schedule:
-    - cron: '*/10 * * * *'  # ⏰ Cada 10 minutos
 
 jobs:
   build:
@@ -33,4 +31,10 @@ jobs:
         run: npm i ts-node -D
       - name: Run Cucumber tests
         run: npm test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Report
+          path: test-result
+          retention-days: 2
 
