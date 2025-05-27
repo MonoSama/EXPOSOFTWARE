@@ -31,5 +31,7 @@ jobs:
         run: npm i ts-node -D
       - name: Run Cucumber tests
         run: npm test
-      
+      - name: Kill all node processes (temporal fix)
+        run: |
+          pkill -f node || true
 
